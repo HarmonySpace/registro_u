@@ -52,6 +52,7 @@ $(document).ready(function () {
           modulList.push($(this).val());
         });
       console.log(modulList);
+      console.log("hello");
       // $.ajax({
       //   url: "/src/controllers/MenuController.php",
       //   method: "POST",
