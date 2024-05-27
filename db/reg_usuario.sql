@@ -55,17 +55,18 @@ CREATE TABLE registro_usuarios (
 CREATE TABLE menus (
   id_menu SERIAL NOT NULL PRIMARY KEY,              -- PRIMARY KEY -> id del menú
   nombre VARCHAR(25) NOT NULL,                      -- nombre del menú
-  tipo_menu INT NOT NULL UNIQUE,            -- tipo de menú
+  tipo_menu INT NOT NULL UNIQUE,                    -- tipo de menú
   activo active_type NOT NULL DEFAULT 'activo',     -- estado actividad del menú
   eliminado delete_type NOT NULL DEFAULT 'no',      -- estado de eliminación del menú
   fecha_registro DATE NOT NULL CURRENT_DATE,        -- fecha del registro
-  id_modulo INT NOT NULL                            -- FORAIGN KEY -> modulos
+  modulos INT[] NOT NULL                            -- FORAIGN KEY -> modulos
 );
 
 -- modulos
 CREATE TABLE modulos (
-  id_modulo SERIAL NOT NULL PRIMARY KEY,            -- PRIMARY KEY -> id del módulo
+  modulos SERIAL NOT NULL PRIMARY KEY,              -- PRIMARY KEY -> id del módulo
   nombre VARCHAR(25) NOT NULL UNIQUE                -- nombre del módulo
+  direccion VARCHAR(125) NOT NULL UNIQUE            -- nombre del módulo
 );
 
 -- usuarios
@@ -88,32 +89,12 @@ REFERENCES menus (id_menu);
 
 ALTER TABLE menus
 ADD CONSTRAINT menus_modulos
-FOREIGN KEY (id_modulo)
-REFERENCES modulos (id_modulo);
+FOREIGN KEY (modulos)
+REFERENCES modulos (modulos);
 
 ALTER TABLE usuarios
 ADD CONSTRAINT usuarios_menus
 FOREIGN KEY (tipo_menu)
 REFERENCES menus (tipo_menu);
 
--- Changes
--- ALTER TABLE menus ALTER COLUMN fecha_registro SET DEFAULT CURRENT_DATE;
--- ALTER TABLE menus ALTER COLUMN id_modulo SET DATA TYPE INT;
--- ALTER TABLE menus ALTER COLUMN id_modulo DROP DEFAULT;
--- ALTER TABLE usuarios DROP CONSTRAINT usuario_menus;
--- ALTER TABLE usuarios ALTER COLUMN tipo_menu SET DATA TYPE INT USING tipo_menu::int;
--- ALTER TABLE menus ALTER COLUMN tipo_menu SET DATA TYPE INT USING tipo_menu::int;
--- TRUNCATE modulos CASCADE;
--- TRUNCATE registro_usuarios CASCADE;
--- TRUNCATE usuarios CASCADE;
--- TRUNCATE menus CASCADE;
 
--- Access to server
--- psql -h pgsql -p 5432 -U postgres -w registro_u
-
--- DONT RUN! (postgres 9.4)
--- ALTER TABLE usuarios DISABLE CONSTRAINT usuario_menus;
--- ALTER TABLE menus DISABLE CONSTRAINT usuario_menus;
-
--- NOTES
--- Add a "direccion" column to modulos table
