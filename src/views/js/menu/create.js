@@ -39,7 +39,6 @@ $(document).ready(function () {
   });
   $("#form").submit(function (event) {
     event.preventDefault();
-    const checkedList = [];
     if (
       name.val() !== "" &&
       type.val() !== "" &&
@@ -47,7 +46,13 @@ $(document).ready(function () {
       deleted.val() !== "" &&
       modul.val() !== ""
     ) {
-      console.log(checkedList);
+      const modulList = [];
+      $("#list-group") >
+        $(".form-check-input:checked").each(function () {
+          modulList.push($(this).val());
+        });
+      console.log(modulList);
+      console.log("hello");
       // $.ajax({
       //   url: "/src/controllers/MenuController.php",
       //   method: "POST",
@@ -93,11 +98,3 @@ $(document).ready(function () {
     }
   });
 });
-
-// $('input[type="checkbox"]').on('change', function() {
-//   const checkedIds = [];
-//   $('input[type="checkbox"]:checked').each(function() {
-//     checkedIds.push($(this).val());
-//   });
-//   console.log(checkedIds); // Array of IDs of checked checkboxes
-// });
