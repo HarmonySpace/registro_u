@@ -1,0 +1,8 @@
+
+<label for="{{select.id}}" class="form-label">{{select.label}}</label>
+<select class="form-select" id="{{select.id}}">
+	<option selected value="">None</option>
+	{{# options }}
+		<option value="{{value}}">{{text}}</option>
+	{{/ options }}
+</select>

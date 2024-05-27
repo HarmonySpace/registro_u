@@ -1,0 +1,32 @@
+<section>
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="col">ID</th>
+				<th class="col">Nombre</th>
+				<th class="col">Activo</th>
+				<th class="col">Registrado</th>
+				<th class="col">Tipo</th>
+				<th class="col">Modulo</th>
+				<th class="col">Eliminado</th>
+				<th class="col">Opciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{# data }}
+			<tr data-id={{id_menu}}>
+				<td>{{id_menu}}</td>
+				<td>{{nombre}}</td>
+				<td>{{activo}}</td>
+				<td>{{fecha_registro}}</td>
+				<td>{{tipo_menu}}</td>
+				<td>{{id_modulo}}</td>
+				<td>{{eliminado}}</td>
+				<td>
+					<button id="edit" class="btn btn-primary">Editar</button>
+				</td>
+			</tr>
+			{{/ data }}
+		</tbody>
+	</table>
+</section>

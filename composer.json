@@ -1,0 +1,19 @@
+{
+  "name": "regis01/unan01",
+  "description": "And user register app to unan",
+  "type": "project",
+  "license": "mit",
+  "autoload": {
+    "psr-4": {
+      "Regis01\\Unan01\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "manuel"
+    }
+  ],
+  "require": {
+    "mustache/mustache": "~2.5"
+  }
+}
