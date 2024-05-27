@@ -47,7 +47,8 @@ class ModulController extends Controller
 	public function create()
 	{
 		$data = array(
-			'nombre' => $_POST['name']
+			'nombre' => $_POST['name'],
+			'direccion' => $_POST['direction']
 		);
 		$exist = $this->model->find($data);
 		if ($exist) {
@@ -67,7 +68,8 @@ class ModulController extends Controller
 	public function update()
 	{
 		$data = array(
-			'nombre' => $_POST['name']
+			'nombre' => $_POST['name'],
+			'direccion' => $_POST['direction']
 		);
 		$exist = $this->model->find($data);
 		if ($exist) {
