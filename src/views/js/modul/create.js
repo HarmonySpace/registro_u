@@ -1,15 +1,17 @@
 $(document).ready(function () {
   const name = $("#name");
+  const direction = $("#direction");
   const error = $("#error");
   $("#form").submit(function (event) {
     event.preventDefault();
-    if (name.val() !== "") {
+    if (name.val() !== "" && direction.val() !== "") {
       $.ajax({
         url: "/src/controllers/ModulController.php",
         method: "POST",
         data: {
           request: "create",
           name: name.val(),
+          direction: direction.val(),
         },
         success: function (res) {
           const data = JSON.parse(res);

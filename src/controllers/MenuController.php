@@ -38,7 +38,7 @@ class MenuController extends Controller
 		    'tipo_menu' => $_POST['type'],
 		    'activo' => $_POST['active'],
 		    'eliminado' => $_POST['deleted'],
-		    'id_modulo' => $_POST['modul']
+		    'modulos' => json_decode($_POST['moduls'], true)
 		  );
 			$this->model->create($data);
 			$response = [

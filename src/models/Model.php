@@ -31,22 +31,25 @@ abstract class Model {
 		$stmt->execute($values);
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
-	public function create($data) {
+  public function create($data) {
     $query = "INSERT INTO " . $this->getTable() . " (" . implode(', ', array_keys($data)) . ") VALUES (:" . implode(', :', array_keys($data)) . ")";
     $stmt = $this->db->prepare($query);
     foreach ($data as $key => $value) {
-        if (is_int($value)) {
-            $stmt->bindValue(':' . $key, $value, PDO::PARAM_INT);
-        } elseif (is_bool($value)) {
-            $stmt->bindValue(':' . $key, $value, PDO::PARAM_BOOL);
-        } elseif (is_null($value)) {
-            $stmt->bindValue(':' . $key, $value, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
-        }
+      if (is_int($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_INT);
+      } elseif (is_bool($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_BOOL);
+      } elseif (is_null($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_NULL);
+      } elseif (is_array($value)) {
+        $value = '{' . implode(', ', $value) . '}';
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+      } else {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+      }
     }
     $stmt->execute();
-}
+  }
 
 	public function update($data) {
 		$query = "UPDATE " . $this->getTable() . " SET ";
