@@ -52,7 +52,7 @@ $(document).ready(function () {
       modul.val() !== "" &&
       modulList.length !== 0
     ) {
-      // console.log(modulList);
+      console.log(modulList);
       $.ajax({
         url: "/src/controllers/MenuController.php",
         method: "POST",
@@ -62,7 +62,7 @@ $(document).ready(function () {
           active: active.val(),
           deleted: deleted.val(),
           type: type.val(),
-          moduls: modulList,
+          moduls: JSON.stringify(modulList),
         },
         success: function (res) {
           const data = JSON.parse(res);
