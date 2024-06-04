@@ -11,6 +11,8 @@ $routes = [
 	'/modul/create' => '/modul/create.html',
 	'/menus' => '/menu/menus.html',
 	'/menu/create' => '/menu/create.html',
+	'/users' => '/user/users.html',
+	'/user/create' => '/user/create.html',
 ];
 
 if (isset($routes[$request])) {

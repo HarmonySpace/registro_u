@@ -29,25 +29,43 @@
       ></script>
       <script src="/public/js/bootstrap.js"></script>
       <script src="/public/js/nav.js"></script>
-      <script type="module" src="/src/views/js/menu/create.js"></script>
+      <script type="module" src="/src/views/js/user/create.js"></script>
     </div>
     <main class="main-container">
       <div id="bootstrap"></div>
       <section class="content-container">
         <div id="nav"></div>
         <div class="mt-3">
-          <h1>Crear menús</h1>
-          <p>Crear un nuevo menú</p>
+          <h1>Crear usuarios</h1>
+          <p>Crear un nuevo usuario</p>
         </div>
         <form id="form">
           <div class="row mt-3">
             <div class="col">
-              <label for="name" class="form-label">Nombre del menú</label>
+              <label for="name" class="form-label">Nombre</label>
               <input class="form-control" id="name" />
             </div>
             <div class="col">
-              <label for="type" class="form-label">Tipo de menu</label>
-              <input class="form-control" id="type" />
+              <label for="lastnames" class="form-label">Apellidos</label>
+              <input class="form-control" id="lastnames" />
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <label for="inss" class="form-label">INSS</label>
+              <input class="form-control" id="inss" />
+            </div>
+            <div class="col">
+              <label for="range" class="form-label">Cargo</label>
+              <input class="form-control" id="range" />
+            </div>
+            <div class="col">
+              <label for="menu" class="form-label">Menú</label>
+              <input class="form-control" id="menu" />
+            </div>
+            <div class="col">
+              <label for="faculty" class="form-label">Facultad</label>
+              <input class="form-control" id="faculty" />
             </div>
           </div>
           <div class="row mt-3">
@@ -65,10 +83,6 @@
                 <option value="si">Si</option>
               </select>
             </div>
-          </div>
-          <div id="list1" class="row mt-3">
-            <label for="" class="form-label">Módulos</label>
-            <div class="col" id="modul_rendered"></div>
           </div>
           <div class="col-12 mt-3">
             <button type="submit" class="btn btn-primary">Crear menú</button>

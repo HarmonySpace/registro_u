@@ -2,10 +2,10 @@ $(document).ready(function () {
   const moduls = $("#data_container");
   const demo = $("#demo");
   $.ajax({
-    url: "/src/controllers/MenuController.php",
+    url: "/src/controllers/UserController.php",
     method: "GET",
     data: {
-      request: "menus",
+      request: "users",
     },
     success: function (res) {
       const data = JSON.parse(res);
@@ -19,7 +19,7 @@ $(document).ready(function () {
         }
       });
       console.log(data);
-      $.get("/src/views/partials/menu/menus.mustache", function (template) {
+      $.get("/src/views/partials/user/users.mustache", function (template) {
         demo.pagination({
           dataSource: data.data,
           pageSize: 10,

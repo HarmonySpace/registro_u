@@ -18,6 +18,7 @@ ALTER TABLE menus ALTER COLUMN tipo_menu SET DATA TYPE INT USING tipo_menu::int;
 -- SET
 --- DEFAULT
 ALTER TABLE menus ALTER COLUMN fecha_registro SET DEFAULT CURRENT_DATE;
+ALTER TABLE registro_usuarios ALTER COLUMN fecha_creacion SET DEFAULT CURRENT_DATE;
 
 -- UPDATE
 --- DATA to DATA
