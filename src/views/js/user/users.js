@@ -8,6 +8,7 @@ $(document).ready(function () {
       request: "users",
     },
     success: function (res) {
+      console.log(res);
       const data = JSON.parse(res);
       //console.log(res);
       data.data.forEach((item) => {
@@ -33,7 +34,7 @@ $(document).ready(function () {
           event.preventDefault();
           console.log("edit");
           const id = $(this).closest("tr").data("id");
-          window.location.href = "/menu/edit/" + id;
+          window.location.href = "/user/edit/" + id;
         });
       });
     },

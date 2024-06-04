@@ -1,70 +1,35 @@
 $(document).ready(function () {
   const url = window.location.href;
   const match = url.match(/\d+/);
-  const menuId = match[0] ? Number(match[0]) : null;
-  const infoMenuId = $("#menu_id");
-  infoMenuId.append(menuId);
+  const infoUserId = $("#user_id");
+  const userId = match[0] ? Number(match[0]) : null;
+  infoUserId.append(userId);
   const error = $("#error");
   const name = $("#name");
+  const lastnames = $("#lastnames");
+  const inss = $("#inss");
+  const range = $("#range");
+  const menu = $("#menu");
+  const faculty = $("#faculty");
   const active = $("#active");
   const deleted = $("#deleted");
-  const type = $("#type");
-  let modulIds = [];
-  let modul = $("#modul"); // this value is null before *select* render
-  const modul_rendered = $("#modul_rendered");
   $.ajax({
-    url: "/src/controllers/MenuController.php",
+    url: "/src/controllers/UserController.php",
     method: "GET",
     data: {
-      request: "menu",
-      id: menuId,
+      request: "user",
+      id: userId,
     },
     success: function (res) {
       const data = JSON.parse(res);
       name.val(data.data[0].nombre);
-      type.val(data.data[0].tipo_menu);
+      lastnames.val(data.data[0].apellidos);
+      inss.val(data.data[0].inss);
+      range.val(data.data[0].cargo);
+      menu.val(data.data[0].id_menu);
+      faculty.val(data.data[0].cod_fac);
       active.val(data.data[0].activo);
       deleted.val(data.data[0].eliminado);
-      modulIds = data.data[0].modulos.split(",").map(function (item) {
-        return parseInt(item.replace(/[{}]/g, ""));
-      });
-    },
-    error: function (status, error) {
-      console.error("error", status, error);
-    },
-  });
-  $.ajax({
-    url: "/src/controllers/ModulController.php",
-    method: "GET",
-    data: {
-      request: "modulsOrder",
-      order: "ASC",
-      column: "nombre",
-    },
-    success: function (res) {
-      const data = JSON.parse(res);
-      const options = data.data.map((item) => {
-        return {
-          text: item.nombre,
-          id: item.id_modulo,
-        };
-      });
-      $.get(
-        "/src/views/partials/components/check_list.mustache",
-        function (template) {
-          const rendered_moduls = Mustache.render(template, {
-            options: options,
-          });
-          modul_rendered.html(rendered_moduls);
-          modul = $("#modul");
-          $.each(modulIds, function (index, id) {
-            $(`#modul_rendered input[type="checkbox"][value="${id}"]`).prop(
-              "checked",
-              true,
-            );
-          });
-        },
-      );
     },
     error: function (status, error) {
       console.error("error", status, error);
@@ -72,37 +37,36 @@ $(document).ready(function () {
   });
   $("#form").submit(function (event) {
     event.preventDefault();
-    const modulList = [];
-    $("#list-group") >
-      $(".form-check-input:checked").each(function () {
-        modulList.push($(this).val());
-      });
     if (
       name.val() !== "" &&
-      type.val() !== "" &&
+      lastnames.val() !== "" &&
+      inss.val() !== "" &&
+      range.val() !== "" &&
+      menu.val() !== "" &&
+      faculty.val() !== "" &&
       active.val() !== "" &&
-      deleted.val() !== "" &&
-      modul.val() !== "" &&
-      modulList.length !== 0
+      deleted.val() !== ""
     ) {
-      console.log(modulList);
       $.ajax({
-        url: "/src/controllers/MenuController.php",
+        url: "/src/controllers/UserController.php",
         method: "POST",
         data: {
           request: "update",
-          id: menuId,
+          id: userId,
           name: name.val(),
+          lastnames: lastnames.val(),
+          inss: inss.val(),
+          range: range.val(),
+          menu: menu.val(),
+          faculty: faculty.val(),
           active: active.val(),
           deleted: deleted.val(),
-          type: type.val(),
-          moduls: JSON.stringify(modulList),
         },
         success: function (res) {
           console.log(res);
           const data = JSON.parse(res);
           if (data.data === "true") {
-            window.location.href = "/menus";
+            window.location.href = "/users";
           } else {
             $.get(
               "/src/views/partials/components/error_message.mustache",

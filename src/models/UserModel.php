@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/Model.php';
 
-class MenuModel extends Model {
+class UserModel extends Model {
 	protected function getTable()
 	{
 			return 'registro_usuarios';

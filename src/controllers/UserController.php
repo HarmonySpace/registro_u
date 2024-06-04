@@ -2,11 +2,11 @@
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../models/UserModel.php';
 
-class MenuController extends Controller
+class UserController extends Controller
 {
 	public function __construct()
 	{
-		$this->model = new MenuModel();
+		$this->model = new UserModel();
 	}
 	public function handleRequest()
 	{
@@ -22,7 +22,7 @@ class MenuController extends Controller
 	}
   public function user() {
     $data = array(
-      'cod_usuario' => $_GET['id']
+      'id_usuario' => $_GET['id']
     );
     $element = $this->model->find($data);
     $response = [
@@ -72,6 +72,7 @@ class MenuController extends Controller
       ];
     } else {
       $data = array(
+				'id' => $_POST['id'],
         'nombre' => $_POST['name'],
 		    'apellidos' => $_POST['lastnames'],
 		    'cod_fac' => $_POST['faculty'],
@@ -90,5 +91,5 @@ class MenuController extends Controller
   }
 }
 
-$controller = new MenuController();
+$controller = new UserController();
 $controller->handleRequest();
