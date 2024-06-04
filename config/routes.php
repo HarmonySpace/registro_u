@@ -3,6 +3,7 @@ $request = $_SERVER['REQUEST_URI'];
 $viewDir = __DIR__ . '/../src/views/pages';
 
 $editModul = '#^/modul/edit/([0-9]+)$#';
+$editMenu = '#^/menu/edit/([0-9]+)$#';
 
 $routes = [
 	'/' => '/home.html',
@@ -15,9 +16,11 @@ $routes = [
 if (isset($routes[$request])) {
 	require $viewDir . $routes[$request];
 	exit;
-}  elseif (preg_match($editModul, $request, $matches)) {
-	$userId = $matches[1];
+} elseif (preg_match($editModul, $request, $matches)) {
 	require $viewDir . '/modul/edit.html';
+	exit;
+} elseif (preg_match($editMenu, $request, $matches)) {
+	require $viewDir . '/menu/edit.html';
 	exit;
 } else {
 	require $viewDir . '/404.html';

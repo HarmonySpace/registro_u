@@ -20,7 +20,11 @@
 				<td>{{activo}}</td>
 				<td>{{fecha_registro}}</td>
 				<td>{{tipo_menu}}</td>
-				<td>{{id_modulo}}</td>
+				<td>
+          {{# modulos }}
+						<span>{{.}}</span>
+          {{/ modulos }}
+        </td>
 				<td>{{eliminado}}</td>
 				<td>
 					<button id="edit" class="btn btn-primary">Editar</button>

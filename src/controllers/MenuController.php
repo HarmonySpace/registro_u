@@ -20,7 +20,16 @@ class MenuController extends Controller
 		];
 		echo json_encode($response);
 	}
-
+  public function menu() {
+    $data = array(
+      'id_menu' => $_GET['id']
+    );
+    $menu = $this->model->find($data);
+    $response = [
+      'data' => $menu
+    ];
+    echo json_encode($response);
+  }
 	public function create()
 	{
 		$data = array(
@@ -46,8 +55,34 @@ class MenuController extends Controller
 			];
 		}
 		echo json_encode($response);
-	}
-
+  }
+  public function update () {
+    $id = $_POST['id'];
+    $data = array(
+		  'tipo_menu' => $_POST['type'],
+		);
+    $exist = $this->model->findOther($data, $id);
+    if ($exist) {
+      $response = [
+        'data' => 'false',
+				'message' => 'El menú tipo <span class="bold">' . $_POST['type'] . '</span> ya existe, intente con otro tipo'
+      ];
+    } else {
+      $data = array(
+        'id' => $_POST['id'],
+        'nombre' => $_POST['name'],
+		    'tipo_menu' => $_POST['type'],
+		    'activo' => $_POST['active'],
+		    'eliminado' => $_POST['deleted'],
+		    'modulos' => json_decode($_POST['moduls'], true)
+      );
+      $this->model->update($data);
+      $response = [
+        'data' => 'true'
+      ];
+    }
+    echo json_encode($response);
+  }
 }
 
 $controller = new MenuController();

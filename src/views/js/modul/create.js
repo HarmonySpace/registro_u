@@ -34,7 +34,7 @@ $(document).ready(function () {
       });
     } else {
       const data = {
-        message: "El nombre es requerido",
+        message: "Todos los valores son requeridos",
       };
       $.get(
         "/src/views/partials/components/error_message.mustache",

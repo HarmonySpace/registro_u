@@ -2,15 +2,18 @@
 require_once __DIR__ . "/../../config/conn.php";
 abstract class Model {
 	protected $db;
+
 	public function __construct() {
 		$this->db = Connection::getConnection();
 	}
+
 	public function findAll() {
 		$query = "SELECT * FROM " . $this->getTable();
 		$stmt = $this->db->prepare($query);
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
 	public function findAllOrder($data) {
 		$query = "SELECT * FROM " . $this->getTable();
 		$query .= " ORDER BY " . $data['column'] . " " . $data['order'];
@@ -18,6 +21,7 @@ abstract class Model {
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
 	public function find($data) {
 		$query = "SELECT * FROM " . $this->getTable();
 		$conditions = array();
@@ -31,6 +35,22 @@ abstract class Model {
 		$stmt->execute($values);
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
+
+	public function findOther($data, $id) {
+	  $query = "SELECT * FROM " . $this->getTable();
+	  $conditions = array();
+	  $values = array();
+	  foreach ($data as $key => $value) {
+	  	$conditions[] = $key . " = :" . $key;
+	  	$values[':'. $key] = $value;
+	  }
+	  $idExeption = ' AND ' . $this->getPrimaryKey() . ' != ' . $id;
+	  $query .= " WHERE " . implode(' AND ', $conditions) . $idExeption;
+	  $stmt = $this->db->prepare($query);
+	  $stmt->execute($values);
+	  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
   public function create($data) {
     $query = "INSERT INTO " . $this->getTable() . " (" . implode(', ', array_keys($data)) . ") VALUES (:" . implode(', :', array_keys($data)) . ")";
     $stmt = $this->db->prepare($query);
@@ -61,8 +81,19 @@ abstract class Model {
 		$query = rtrim($query, ', ') . " WHERE " . $this->getPrimaryKey() . " = :id";
 		$stmt = $this->db->prepare($query);
 		foreach ($data as $key => $value) {
-			$stmt->bindParam(':' . $key, $value);
-		}
+      if (is_int($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_INT);
+      } elseif (is_bool($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_BOOL);
+      } elseif (is_null($value)) {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_NULL);
+      } elseif (is_array($value)) {
+        $value = '{' . implode(', ', $value) . '}';
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+      } else {
+        $stmt->bindValue(':' . $key, $value, PDO::PARAM_STR);
+      }
+    }
 		$stmt->bindParam(':id', $data['id']);
 		$stmt->execute();
 	}

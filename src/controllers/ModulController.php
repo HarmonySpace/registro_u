@@ -54,7 +54,7 @@ class ModulController extends Controller
 		if ($exist) {
 			$response = [
 				'data' => 'false',
-				'message' => 'El modulo <span class="bold">' . $_POST['name'] . '</span> ya existe, intente con otro nombre'
+				'message' => 'El modulo <span class="bold">' . $_POST['name'] . ' >>> ' . $_POST['direction'] . '</span> ya existe, intente con otro nombre'
 			];
 		} else {
 			$this->model->create($data);
@@ -67,11 +67,11 @@ class ModulController extends Controller
 
 	public function update()
 	{
+    $id = $_POST['id'];
 		$data = array(
 			'nombre' => $_POST['name'],
-			'direccion' => $_POST['direction']
 		);
-		$exist = $this->model->find($data);
+		$exist = $this->model->findOther($data, $id);
 		if ($exist) {
 			$response = [
 				'data' => 'false',
@@ -80,7 +80,8 @@ class ModulController extends Controller
 		} else {
 			$data = array(
 				'id' => $_POST['id'],
-				'nombre' => $_POST['name']
+        'nombre' => $_POST['name'],
+        'direccion' => $_POST['direction']
 			);
 			$this->model->update($data);
 			$response = [
